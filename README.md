@@ -53,9 +53,16 @@ This model can be a first approximator for estimate how disease spreads, to get 
 
 On this model, with little modifications, one can also take into account vital dynamics, such as death rate and birth rate. However we hope the pandemic is limited in time so these factors can be omitted.
 
+# The SEIR model
 
+Unfortunately we know coronavirus spread has an incubation period. So even in the case no infected individuals result from a global epidemic test we have to consider that we have to put on our attention for a while. This bring the need for a further compartment that is the Exposed one.
 
+Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 2020 and 24 February 2020,  and computed the median incubation period to be 5.1 days (from 4.5 to 5.8 days), and they further discovered that 97.5% of those who develop symptoms will do so within 11.5 days (from 8.2 to 15.6 days) of infection. 
 
 # sources:
-[1] Yang Z, Zeng Z, Wang K, et al. Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions. J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64
-[2] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+[1]_Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions._ J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64,  Yang Z, Zeng Z, Wang K, et al.
+
+[2] _The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application_, Stephen A. Lauer, Kyra H. Grantz, Qifang Bi, Forrest K. Jones, Qulu Zheng, Hannah R. Meredith, Andrew S. Azman, Nicholas G. Reich, Justin Lessler, https://doi.org/10.7326/M20-0504
+
+[3] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+
