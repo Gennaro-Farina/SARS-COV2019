@@ -22,7 +22,7 @@ This repo will contain:
 In 2020 our world met a disastrous pandemic known as coronavirus disease 2019 (COVID-19). 
 A subset of the people who get infected unfortunately have some severe respiratory phenomenae. 
 The COVID-19 disease in fact is caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).
-The first episodes was identified in Wuhan, Hubei, China in December 2019.
+The first episodes occurred in Wuhan, Hubei, China in December 2019.
 
 To contain its spread nations adopted worldwide interventions. The former country whose adopt these policies was the China, which chose large-scale quarantine, strict controls on travel and extensive monitoring of suspected cases. 
 
