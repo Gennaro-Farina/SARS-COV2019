@@ -1,5 +1,5 @@
 premise:
-I'm not an epidemiologist, so I'll build on existing works in the literature eventually bring some coding contributions and insights that I think might be useful.
+I'm not an epidemiologist, I'm a Computer Scientist, so I'll build on existing works in the literature eventually bring some coding contributions and insights that I think might be useful.
 
 # Implementation of a SIR model for the predictions of coronavirus spreads
 This repo will contain:
@@ -57,10 +57,29 @@ On this model, with little modifications, one can also take into account vital d
 
 Unfortunately we know coronavirus spread has an incubation period. So even in the case no infected individuals result from a global epidemic test we have to consider that we have to put on our attention for a while. This bring the need for a further compartment that is the Exposed one.
 
+For SEIR system the mathematical model is:
+
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dS}{dt}=-\frac{{\beta}IS}{N}" /> 
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dE}{dt}=-\frac{{\beta}SI}{N}-{{\sigma}E}" /> 
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}={{\sigma}E}-{\gamma}I" /> 
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dR}{dt}={\gamma}I" /> 
+
+this model include the latency in infected individual due to 
+
+## Incubation period
 Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 2020 and 24 February 2020,  and computed the median incubation period to be 5.1 days (from 4.5 to 5.8 days), and they further discovered that 97.5% of those who develop symptoms will do so within 11.5 days (from 8.2 to 15.6 days) of infection. 
 
-# sources:
-[1]_Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions._ J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64,  Yang Z, Zeng Z, Wang K, et al.
+## The reproductive number R0
+- <img src="https://latex.codecogs.com/gif.latex?{R_{0}={\beta}{\gamma}}" /> 
+
+
+## Some strong assumptions:
+- No international travels are admitted
+- Birth rate is equal to death rate
+- Recovered people develop immunity
+
+# Sources:
+[1] _Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions._ J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64,  Yang Z, Zeng Z, Wang K, et al.
 
 [2] _The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application_, Stephen A. Lauer, Kyra H. Grantz, Qifang Bi, Forrest K. Jones, Qulu Zheng, Hannah R. Meredith, Andrew S. Azman, Nicholas G. Reich, Justin Lessler, https://doi.org/10.7326/M20-0504
 
