@@ -1,3 +1,6 @@
+premise:
+I'm not an epidemiologist, so I'll build on existing works in the literature eventually bring some coding contributions and insights that I think might be useful.
+
 # Implementation of a SIR model for the predictions of coronavirus spreads
 This repo will contain:
 
@@ -20,12 +23,20 @@ In 2020 our world met a disastrous pandemic known as coronavirus disease 2019 (C
 A subset of the people who get infected unfortunately have some severe respiratory phenomenae. 
 The COVID-19 disease in fact is caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).
 Former episodes was identified in Wuhan, Hubei, China in December 2019.
-To contain its spread nations adopted worldwide interventions. The former country whose adopt these policies was the China, which chose large-scale quarantine, strict controls on travel and extensive monitoring of suspected cases. *SIR* model is one of the simplest epidemic models, and many models are derivations of this basic form. The population is divided into three compartments, with the assumption that every individual in the same compartment has the same characteristics: 
+
+To contain its spread nations adopted worldwide interventions. The former country whose adopt these policies was the China, which chose large-scale quarantine, strict controls on travel and extensive monitoring of suspected cases. 
+
+# The Susceptible, Infectious, or Recovered mathematical model of epidemic
+
+*SIR* model, introduced by _William Ogilvy Kermack_ and _Anderson Gray McKendrick_, is one of the simplest epidemic models, and many models are derivations of this basic form. The population is divided into three compartments, with the assumption that every individual in the same compartment has the same characteristics: 
 - S: the number of susceptible
 - I: the number of infected
 - R: the number recovered (or immune) individuals.
 
-The model is described by the following Differential Equatiions:
+These variables represent the number of people in each compartment at a particular time, it can be much easy to think at them as three functions of time:
+<img src="https://latex.codecogs.com/gif.latex?{S(t),{\,}I(t),{\,}R(t)}" /> .
+
+The deterministic model is described by the following Odrinary Differential Equations (ODE):
 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dS}{dt}=-\frac{{\beta}IS}{N}" /> 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}=-\frac{{\beta}IS}{N}-{\gamma}I" /> 
@@ -35,5 +46,16 @@ where:
 - <img src="https://latex.codecogs.com/gif.latex?{\beta}"/> is the transmition rate constant representingthe average number of transmissive contacts per day.
 - <img src="https://latex.codecogs.com/gif.latex?\frac{1}{\gamma}"/>  is the mean infection time and <img src="https://latex.codecogs.com/gif.latex?N"/>  is the total population size
 
+- the force of infection is defined by <img src="https://latex.codecogs.com/gif.latex?{{\beta}I}"/> and models the transition rate from S to I compartment.
+
+This model can be a first approximator for estimate how disease spreads, to get the total number of infected or the duration of the epidemic. By playing with <img src="https://latex.codecogs.com/gif.latex?{\beta}"/> and <img src="https://latex.codecogs.com/gif.latex?\gamma"/> you can profile some different situations.
+
+
+On this model, with little modifications, one can also take into account vital dynamics, such as death rate and birth rate. However we hope the pandemic is limited in time so these factors can be omitted.
+
+
+
+
 # sources:
 [1] Yang Z, Zeng Z, Wang K, et al. Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions. J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64
+[2] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
