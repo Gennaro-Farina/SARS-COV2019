@@ -70,6 +70,8 @@ this model include the latency in infected individual due to
 Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 2020 and 24 February 2020,  and computed the median incubation period to be 5.1 days (from 4.5 to 5.8 days), and they further discovered that 97.5% of those who develop symptoms will do so within 11.5 days (from 8.2 to 15.6 days) of infection. 
 
 ## The reproductive number R0
+<img src="https://latex.codecogs.com/gif.latex?{R_{0}}" />  is the reproductive number and you can think at it as the number of new cases generated from a single case - as a mean number - in a non-infected polulation, under hypothesis that all the polulation is supsceptible. It's definition is still not completely shared in mathematical community.
+
 - <img src="https://latex.codecogs.com/gif.latex?{R_{0}={\beta}{\gamma}}" /> 
 
 
@@ -77,11 +79,20 @@ Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 20
 - No international travels are admitted
 - Birth rate is equal to death rate
 - Recovered people develop immunity
+- All the polulation is supsceptible
+
+## Further consideration
+Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:  and no! this is not _The walking dead_ pandemic :zombie: . Keep attention on please.
 
 # Sources:
 [1] _Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions._ J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64,  Yang Z, Zeng Z, Wang K, et al.
 
 [2] _The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application_, Stephen A. Lauer, Kyra H. Grantz, Qifang Bi, Forrest K. Jones, Qulu Zheng, Hannah R. Meredith, Andrew S. Azman, Nicholas G. Reich, Justin Lessler, https://doi.org/10.7326/M20-0504
 
-[3] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+[3] https://en.wikipedia.org/
 
+    [3.1] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+    
+    [3.2] https://it.wikipedia.org/wiki/Numero_di_riproduzione_di_base
+
+[4] https://idmod.org/docs/general/model-seir.html
