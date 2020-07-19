@@ -20,9 +20,23 @@ classdef Model_cls < handle
         dS;
         dE;
         dI;
-        dR;
-        dC;        
+        dR;        
         tend;
+    end
+    
+    methods(Static)
+        function dydt = OrdinaryDifferentialEquation_SEIR(~, y, N, beta, gamma, sigma)
+            S = y(1);
+            E = y(2);    
+            I = y(3);
+            % R is not used in the ODE system
+            
+            dydt    = zeros(4,1);
+            dydt(1) = -(beta*S*I)/N ;
+            dydt(2) =  (beta*S*I/N) - (sigma*E);    
+            dydt(3) =  (sigma*E) - (gamma*I);
+            dydt(4) =  gamma * I;
+        end
     end
     
     methods(Access = public)
@@ -58,7 +72,8 @@ classdef Model_cls < handle
 
         end
         
-        function dydt = simulate_fcn(This_obj, varargin)
+        function simulate_fcn(This_obj, varargin)
+            import com.Model.*;
             p = inputParser();
             
             addParameter(p, 'I0', 1);
@@ -71,48 +86,28 @@ classdef Model_cls < handle
             I0 = p.Results.I0;
             E0 = p.Results.E0;
             
-            tend    = p.Results.tend;
-
             switch This_obj.modelType_scl
                 case This_obj.SEIR_MODEL_scl
                     
-                    y0 = [ This_obj.N-I0-E0  E0  I0 0  I0];
-                    [tout,y] = ode45(@(t,y) odeSEIR(t,y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
-                        tspan, y0);
+                    y0 = [ This_obj.N-I0-E0  E0  I0 0];
+                    [tout, y] = ode45(@(t,y) Model_cls.OrdinaryDifferentialEquation_SEIR(t,y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
+                        0:1:p.Results.tend, y0);
                     % save results
-                    obj.t = tout;
-                    obj.S = y(:,1);
-                    obj.E = y(:,2);                    
-                    obj.I = y(:,3);
-                    obj.R = y(:,4);
-                    obj.C = y(:,5);
+                    This_obj.t = tout;
+                    This_obj.S = y(:,1);
+                    This_obj.E = y(:,2);                    
+                    This_obj.I = y(:,3);
+                    This_obj.R = y(:,4);
                     % calculate derivatives
-                    dy = zeros(length(tout),5);
-                    for n = 1:length(tout)
-                        dy(n,:) = odeSEIR(0,y(n,:),obj.N,obj.beta,obj.gamma,obj.sigma);
+                    dy = zeros(length(tout), 4);
+                    for idx = 1:length(tout)
+                        dy(idx,:) =  Model_cls.OrdinaryDifferentialEquation_SEIR(0, y(idx,:), This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma);
                     end
-                    obj.dS = dy(:,1);
-                    obj.dE = dy(:,2);                      
-                    obj.dI = dy(:,3);                  
-                    obj.dR = dy(:,4);
-                    obj.dC = dy(:,5);   
-                    
-                    dydt = This_obj.OrdinaryDifferentialEquation_SEIR(y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma);
-                    y0 = [This_obj.N - This_obj.I0 - This_obj.E0 This_obj.E0 This_obj.I0 0 This_obj.I0];                    
+                    This_obj.dS = dy(:,1);
+                    This_obj.dE = dy(:,2);                      
+                    This_obj.dI = dy(:,3);                  
+                    This_obj.dR = dy(:,4);
             end
-        end
-        
-        function dydt = OrdinaryDifferentialEquation_SEIR(~, y, N, beta, gamma, sigma)
-            S = y(1);
-            E = y(2);    
-            I = y(3);
-            % R is not used in the ODE system
-            
-            dydt    = zeros(4,1);
-            dydt(1) = -(beta*S*I)/N ;
-            dydt(2) =  (beta*S*I/N) - (sigma*E);    
-            dydt(3) =  (sigma*E) - (gamma*I);
-            dydt(4) =  gamma * I;
         end
     end
 end
