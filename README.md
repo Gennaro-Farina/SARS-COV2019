@@ -87,10 +87,12 @@ Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:  and no
 
 [2] _The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application_, Stephen A. Lauer, Kyra H. Grantz, Qifang Bi, Forrest K. Jones, Qulu Zheng, Hannah R. Meredith, Andrew S. Azman, Nicholas G. Reich, Justin Lessler, https://doi.org/10.7326/M20-0504
 
-[3] https://en.wikipedia.org/
+[3] M.  J.  Keeling  and  P.  Rohani,Modeling  infectious  diseases  in  humansand animals.    Princeton University Press, 2008
 
-    [3.1] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+[4] https://en.wikipedia.org/
+
+    [4.1] https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
     
-    [3.2] https://it.wikipedia.org/wiki/Numero_di_riproduzione_di_base
+    [4.2] https://it.wikipedia.org/wiki/Numero_di_riproduzione_di_base
 
-[4] https://idmod.org/docs/general/model-seir.html
+[5] https://idmod.org/docs/general/model-seir.html
