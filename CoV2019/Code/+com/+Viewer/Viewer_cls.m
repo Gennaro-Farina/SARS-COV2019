@@ -42,7 +42,7 @@ classdef Viewer_cls < handle
             
             legend(legendNames);
             
-            if not(isempty(title))
+            if not(isempty(title_str))
                 title(title_str);
             end
             % putting date reference in the upper zone
