@@ -1,13 +1,19 @@
 classdef Viewer_cls < handle
     methods(Access = public)
         function This_obj = Viewer_cls(independentVariableArray, dependentVariables, varargin)
+            legendNames = [];
             p = inputParser();
 
             addParameter(p, 'names', []);
             addParameter(p, 't0',   datenum('01-Gen-2020'));
+            addParameter(p, 'datapoints', []);
+            addParameter(p, 'datapointsNames', []);
             
             parse(p, varargin{:})
 
+            datapoints = p.Results.datapoints;
+            datapointsNames = p.Results.datapointsNames;
+            
             % dependentVariables is a matrix whose column are dependent variables
             figure();
             hold on;
@@ -16,9 +22,20 @@ classdef Viewer_cls < handle
             end
             
             if not(isempty(p.Results.names))
-                legend(p.Results.names');
+                legendNames = [legendNames, p.Results.names'];
             end
             
+            % plotting real data
+            for dpi = 1:size(datapoints, 2)
+                plot(independentVariableArray(1:size(datapoints,1)), datapoints(:, dpi), 'o');
+            end
+            
+            if not(isempty(datapointsNames))
+                legendNames = [legendNames; datapointsNames(:)];
+            end
+            
+            legend(legendNames);
+            % putting date reference in the upper zone
             xlabel('Days from t_0');
             ylabel('Individuals');            
             ax1 = gca;
