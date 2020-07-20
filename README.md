@@ -64,8 +64,6 @@ For SEIR system the mathematical model is:
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}={{\sigma}E}-{\gamma}I" /> 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dR}{dt}={\gamma}I" /> 
 
-this model include the latency in infected individual due to 
-
 ## Incubation period
 Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 2020 and 24 February 2020,  and computed the median incubation period to be 5.1 days (from 4.5 to 5.8 days), and they further discovered that 97.5% of those who develop symptoms will do so within 11.5 days (from 8.2 to 15.6 days) of infection. 
 
