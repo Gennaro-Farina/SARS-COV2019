@@ -85,7 +85,7 @@ classdef Model_cls < matlab.mixin.Copyable
             R = sol(:,4);
 %             d_= sol(:,5);
             
-            err =  I(1:size(dataTable, 1)) - dataTable.PositivesTotal.^2;
+            err =  I(1:size(dataTable, 1)) - dataTable.PositivesTotal);
             %err =(...
             %I(1:size(dataTable, 1)) - dataTable.PositivesTotal);%.^2;% +...
             %R(1:size(dataTable, 1)) - dataTable.Recovered).^2;
