@@ -143,8 +143,9 @@ classdef Model_cls < matlab.mixin.Copyable
                     
 %                     y0 = [This_obj.N-I0-E0-0  E0  I0 0 I0];
                     y0 = [This_obj.N-I0-E0-0  E0  I0 0];
+                    opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9);
                     [tout, y] = ode45(@(t,y) Model_cls.OrdinaryDifferentialEquation_SEIR(t,y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
-                        0:1:p.Results.tend, y0);
+                        0:1:p.Results.tend, y0, opt);
                     % save results
                     This_obj.t = tout;
                     This_obj.S = y(:,1);
@@ -153,7 +154,7 @@ classdef Model_cls < matlab.mixin.Copyable
                     This_obj.R = y(:,4);
 %                     This_obj.d_= y(:,5);
                     % calculate derivatives
-                    dy = zeros(length(tout), 5);
+                    dy = zeros(length(tout), 4);
                     for idx = 1:length(tout)
                         dy(idx,:) =  Model_cls.OrdinaryDifferentialEquation_SEIR(0, y(idx,:), This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma);
                     end
