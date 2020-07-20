@@ -1,4 +1,4 @@
-classdef Model_cls < handle
+classdef Model_cls < matlab.mixin.Copyable
     properties(Constant)
         SEIR_MODEL_scl = 1;
     end
@@ -32,12 +32,62 @@ classdef Model_cls < handle
             I = y(3);
             % R is not used in the ODE system
             
-            dydt    = zeros(5,1);
-            dydt(1) = -(beta*S*I)/N ;
+            dydt    =  zeros(4,1);
+            dydt(1) =  -(beta*S*I)/N ;
             dydt(2) =  (beta*S*I/N) - (sigma*E);    
             dydt(3) =  (sigma*E) - (gamma*I);
             dydt(4) =  gamma * I;
-            dydt(5) =  sigma*E;
+            %dydt(5) =  sigma*E;
+        end
+        
+        function dydt = ODE_SEIR(~, y, beta, gamma, sigma)
+            S = y(1);
+            E = y(2);    
+            I = y(3);
+            R = y(4);
+            % R is not used in the ODE system
+            N = S + E + I + R;
+            
+            dydt    =  zeros(4,1);
+            dydt(1) =  -(beta*S*I)/N ;
+            dydt(2) =  (beta*S*I/N) - (sigma*E);    
+            dydt(3) =  (sigma*E) - (gamma*I);
+            dydt(4) =  gamma * I;
+%             dydt(5) =  sigma*E;
+        end
+        
+        function y = ode_solver(tSpan, init_cond, beta, gamma, sigma)
+            import com.Model.*;
+            
+            E0 = init_cond(1);
+            I0 = init_cond(2);
+            R0 = init_cond(3);
+            N0 = init_cond(4);
+            
+            S0 = N0 - E0 - I0 - R0;
+            
+%             y0 = [S0  E0  I0 0 I0];
+            y0 = [S0  E0  I0 0];
+            [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR(t, y, beta, gamma, sigma), ...
+                        tSpan, y0);
+            
+        end
+        
+        function err = calculateSEIRError(params,  init_cond, tSpan, dataTable)
+            import com.Model.*;
+            
+            [beta, gamma, sigma] = deal(params(1), params(2), params(3));
+            sol = Model_cls.ode_solver(tSpan, init_cond, beta, gamma, sigma);
+            
+            S = sol(:,1);
+            E = sol(:,2);                    
+            I = sol(:,3);
+            R = sol(:,4);
+%             d_= sol(:,5);
+            
+            err =(...
+            I(1:size(dataTable, 1)) - dataTable.PositivesTotal);%.^2;% +...
+            %R(1:size(dataTable, 1)) - dataTable.Recovered).^2;
         end
     end
     
@@ -91,7 +141,8 @@ classdef Model_cls < handle
             switch This_obj.modelType_scl
                 case This_obj.SEIR_MODEL_scl
                     
-                    y0 = [This_obj.N-I0-E0  E0  I0 0 I0];
+%                     y0 = [This_obj.N-I0-E0-0  E0  I0 0 I0];
+                    y0 = [This_obj.N-I0-E0-0  E0  I0 0];
                     [tout, y] = ode45(@(t,y) Model_cls.OrdinaryDifferentialEquation_SEIR(t,y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
                         0:1:p.Results.tend, y0);
                     % save results
@@ -100,7 +151,7 @@ classdef Model_cls < handle
                     This_obj.E = y(:,2);                    
                     This_obj.I = y(:,3);
                     This_obj.R = y(:,4);
-                    This_obj.d_= y(:,5);
+%                     This_obj.d_= y(:,5);
                     % calculate derivatives
                     dy = zeros(length(tout), 5);
                     for idx = 1:length(tout)
@@ -110,14 +161,14 @@ classdef Model_cls < handle
                     This_obj.dE = dy(:,2);                      
                     This_obj.dI = dy(:,3);                  
                     This_obj.dR = dy(:,4);
-                    This_obj.d_ = dy(:,5);
+%                     This_obj.d_ = dy(:,5);
                     
                     ReLU = @(x) max(0, x);
                     This_obj.S      = arrayfun(ReLU, This_obj.S);
                     This_obj.E      = arrayfun(ReLU, This_obj.E);
                     This_obj.I      = arrayfun(ReLU, This_obj.I);
                     This_obj.R      = arrayfun(ReLU, This_obj.R);
-                    This_obj.d_     = arrayfun(ReLU, This_obj.d_);
+%                     This_obj.d_     = arrayfun(ReLU, This_obj.d_);
             end
         end
     end
