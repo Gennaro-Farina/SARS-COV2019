@@ -43,8 +43,9 @@ classdef Viewer_cls < handle
             legend(legendNames);
             
             if not(isempty(title_str))
-                title(title_str);
+                title({title_str; ' '});
             end
+            
             % putting date reference in the upper zone
             xlabel('Days from t_0');
             ylabel('Individuals');            
@@ -60,6 +61,8 @@ classdef Viewer_cls < handle
 %             xtickformat('dd-MMM-yyyy')
             datetick(ax2)
             set(gca,'ytick',[])
+            
+           
         end
     end
 end

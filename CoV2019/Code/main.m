@@ -93,7 +93,7 @@ try
 %                            'E0',    0, ...
 %                            'tend',  tend);
 
-    options.Algorithm = 'levenberg-marquardt';
+    options.Algorithm = 'trust-region-reflective';%'levenberg-marquardt';
     initialParameters = [beta gamma sigma];
     lowerBoundsX = [1e-8, 1e-8, 1e-8];
     init_cond = [E0, I0, 0, N];    
