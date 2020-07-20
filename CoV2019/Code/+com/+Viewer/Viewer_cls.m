@@ -8,11 +8,13 @@ classdef Viewer_cls < handle
             addParameter(p, 't0',   datenum('01-Gen-2020'));
             addParameter(p, 'datapoints', []);
             addParameter(p, 'datapointsNames', []);
+            addParameter(p, 'title', []);
             
             parse(p, varargin{:})
 
             datapoints = p.Results.datapoints;
             datapointsNames = p.Results.datapointsNames;
+            title_str = p.Results.title;
             
             % dependentVariables is a matrix whose column are dependent variables
             figure();
@@ -34,7 +36,15 @@ classdef Viewer_cls < handle
                 legendNames = [legendNames; datapointsNames(:)];
             end
             
+            if not(isempty(datapointsNames))
+                legendNames = [legendNames; datapointsNames(:)];
+            end
+            
             legend(legendNames);
+            
+            if not(isempty(title))
+                title(title_str);
+            end
             % putting date reference in the upper zone
             xlabel('Days from t_0');
             ylabel('Individuals');            
