@@ -62,8 +62,9 @@ classdef DataProvider_cls < handle
                 TotalCases                      = grpstats(dataTable.TotalCases,                    dataTable.group, @sum);
                 Recovered                       = grpstats(dataTable.Recovered,                     dataTable.group, @sum);
                 Deaths                          = grpstats(dataTable.Deaths,                        dataTable.group, @sum);
-                newTable                            = table(datapointDate,  HospitalizedWithSymptoms,  IntensiveCare,   TotalHospitalized,   HomeConfinement,   PositivesTotal,   PositivesVariation,   NewPositives,   TotalCases,    Recovered,  Deaths);
-                newTable.Properties.VariableNames   =             {'Date', 'HospitalizedWithSymptoms', 'IntensiveCare', 'TotalHospitalized', 'HomeConfinement', 'PositivesTotal', 'PositivesVariation', 'NewPositives', 'TotalCases', 'Recovered', 'Deaths'};
+                TotalTampons                    = grpstats(dataTable.TotalTampons,                  dataTable.group, @sum);
+                newTable                            = table(datapointDate,  HospitalizedWithSymptoms,  IntensiveCare,   TotalHospitalized,   HomeConfinement,   PositivesTotal,   PositivesVariation,   NewPositives,   TotalCases,    Recovered,  Deaths,    TotalTampons);
+                newTable.Properties.VariableNames   =             {'Date', 'HospitalizedWithSymptoms', 'IntensiveCare', 'TotalHospitalized', 'HomeConfinement', 'PositivesTotal', 'PositivesVariation', 'NewPositives', 'TotalCases', 'Recovered', 'Deaths', 'TotalTampons'};
             elseif sum(contains(upper(dataTable.RegionName), region))>1
                 newTable = dataTable(strcmpi(dataTable.RegionName, p.Results.region), :);
             end
