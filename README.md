@@ -39,7 +39,7 @@ These variables represent the number of people in each compartment at a particul
 The deterministic model is described by the following Odrinary Differential Equations (ODE):
 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dS}{dt}=-\frac{{\beta}IS}{N}" /> 
-- <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}=-\frac{{\beta}IS}{N}-{\gamma}I" /> 
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}=\frac{{\beta}IS}{N}-{\gamma}I" /> 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dR}{dt}=-{\gamma}I" /> 
 
 where:
@@ -60,7 +60,7 @@ Unfortunately we know coronavirus spread has an incubation period. So even in th
 For SEIR system the mathematical model is:
 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dS}{dt}=-\frac{{\beta}IS}{N}" /> 
-- <img src="https://latex.codecogs.com/gif.latex?\frac{dE}{dt}=-\frac{{\beta}IS}{N}-{{\sigma}E}" /> 
+- <img src="https://latex.codecogs.com/gif.latex?\frac{dE}{dt}=\frac{{\beta}IS}{N}-{{\sigma}E}" /> 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dI}{dt}={{\sigma}E}-{\gamma}I" /> 
 - <img src="https://latex.codecogs.com/gif.latex?\frac{dR}{dt}={\gamma}I" /> 
 
