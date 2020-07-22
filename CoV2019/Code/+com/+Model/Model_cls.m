@@ -73,16 +73,16 @@ classdef Model_cls < matlab.mixin.Copyable
             R = sol(:,4);
             
             s1= (I(1:size(dataTable, 1)) - dataTable.PositivesTotal).^2;
-%             s1 = s1/max(s1);
+            s1 = s1/max(s1);
             
             s2 = abs(R(1:size(dataTable, 1)) - dataTable.Recovered);
-%             s2 = s2/max(s2);
+            s2 = s2/max(s2);
             
 %             clf;
 %             hold on;
 %             plot(1:size(dataTable, 1), s1, 'r');
 %             plot(1:size(dataTable, 1), s2, 'b');
-            err = a*s1 + b*s2;% + s2;%/(max(s1)*max(s2));
+            err = a*s1 .* (b*s2);% + s2;%/(max(s1)*max(s2));
 
 %             try
 %                 A1 = trapz(I(1:size(dataTable, 1)));
@@ -137,7 +137,7 @@ classdef Model_cls < matlab.mixin.Copyable
             addParameter(p, 'I0', 1);
             addParameter(p, 'E0', 0);
             addParameter(p, 'R0', 0);
-            addParameter(p, 'N0', 0);
+            addParameter(p, 'N0', This_obj.N);
             addParameter(p, 't0', datetime('2020-01-01'));
             addParameter(p, 'tend', datetime('2020-01-09'));
 
@@ -152,10 +152,8 @@ classdef Model_cls < matlab.mixin.Copyable
                 case This_obj.SEIR_MODEL_scl
                     
                     y0 = [E0 I0 R0 N0];%;This_obj.N];
-                    opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9, 'MaxOrder', 5);
-
                     % non stiff solver
-                    [y, tout] = ode_solver([0:1:p.Results.tend], y0, This_obj.beta, This_obj.gamma, This_obj.sigma)
+                    [y, tout] = Model_cls.ode_solver([0:1:p.Results.tend], y0, This_obj.beta, This_obj.gamma, This_obj.sigma);
 %                     [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR(t, y, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
 %                         0:1:p.Results.tend, y0, opt);
                     % save results
