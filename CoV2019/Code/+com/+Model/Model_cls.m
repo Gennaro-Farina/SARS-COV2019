@@ -51,7 +51,7 @@ classdef Model_cls < matlab.mixin.Copyable
             
             S0 = N0 - E0 - I0 - R0;
             
-            y0 = [S0  E0  I0 0];
+            y0 = [S0  E0  I0 R0];
             
             opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9, 'MaxOrder', 5);
             % non stiff solver               
@@ -60,7 +60,57 @@ classdef Model_cls < matlab.mixin.Copyable
             
         end
         
-        function err = calculateSEIRError(params,  init_cond, tSpan, dataTable, hyperparameters)
+        function [I, R]  = getIR(params, tSpan, init_cond)
+            import com.Model.*;
+%             [a, b] = deal(hyperparameters(1), hyperparameters(2));
+            
+            [beta, gamma, sigma] = deal(params(1), params(2), params(3));
+            sol = Model_cls.ode_solver(tSpan, init_cond, beta, gamma, sigma);
+            
+%             S = sol(:,1);
+%             E = sol(:,2);                    
+            I = sol(:,3);
+            R = sol(:,4);
+            
+%             s1= (I(1:size(dataTable, 1)) - dataTable.PositivesTotal).^2;
+% %             s1 = s1/max(s1);
+%             
+%             s2 = abs(R(1:size(dataTable, 1)) - dataTable.Recovered);
+% %             s2 = s2/max(s2);
+%             
+% %             clf;
+% %             hold on;
+% %             plot(1:size(dataTable, 1), s1, 'r');
+% %             plot(1:size(dataTable, 1), s2, 'b');
+%             err = a*s1 + (b*s2);
+
+%             try
+%                 A1 = trapz(I(1:size(dataTable, 1)));
+%                 A2 = trapz(dataTable.PositivesTotal);
+%             catch
+%                 disp('here');
+%             end            
+%             %I admit the prediction to be just a little higher then the actual value
+%             err = abs(A1 - A2);
+            
+            
+        end
+        
+        function [S, E, I, R] = getSEIR(params, tSpan, init_cond)
+            import com.Model.*;
+
+                        
+            [beta, gamma, sigma] = deal(params(1), params(2), params(3));
+            sol = Model_cls.ode_solver(tSpan, init_cond, beta, gamma, sigma);
+            
+            S = sol(:,1);
+            E = sol(:,2);                    
+            I = sol(:,3);
+            R = sol(:,4);
+        end
+        
+        
+        function err = calculateSEIRErrorOLD(params,  init_cond, tSpan, dataTable, hyperparameters)
             import com.Model.*;
             [a, b] = deal(hyperparameters(1), hyperparameters(2));
             
@@ -73,16 +123,16 @@ classdef Model_cls < matlab.mixin.Copyable
             R = sol(:,4);
             
             s1= (I(1:size(dataTable, 1)) - dataTable.PositivesTotal).^2;
-            s1 = s1/max(s1);
+%             s1 = s1/max(s1);
             
             s2 = abs(R(1:size(dataTable, 1)) - dataTable.Recovered);
-            s2 = s2/max(s2);
+%             s2 = s2/max(s2);
             
 %             clf;
 %             hold on;
 %             plot(1:size(dataTable, 1), s1, 'r');
 %             plot(1:size(dataTable, 1), s2, 'b');
-            err = a*s1 .* (b*s2);% + s2;%/(max(s1)*max(s2));
+            err = a*s1 + (b*s2);
 
 %             try
 %                 A1 = trapz(I(1:size(dataTable, 1)));
