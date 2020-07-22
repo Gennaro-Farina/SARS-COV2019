@@ -26,26 +26,12 @@ classdef Model_cls < matlab.mixin.Copyable
     end
     
     methods(Static)
-        function dydt = OrdinaryDifferentialEquation_SEIR(~, y, N, beta, gamma, sigma)
-            S = y(1);
-            E = y(2);    
-            I = y(3);
-            % R is not used in the ODE system
-            
-            dydt    =  zeros(4,1);
-            dydt(1) =  -(beta*S*I)/N ;
-            dydt(2) =  (beta*S*I/N) - (sigma*E);    
-            dydt(3) =  (sigma*E) - (gamma*I);
-            dydt(4) =  gamma * I;
-            %dydt(5) =  sigma*E;
-        end
         
         function dydt = ODE_SEIR(~, y, beta, gamma, sigma)
             S = y(1);
             E = y(2);    
             I = y(3);
             R = y(4);
-            % R is not used in the ODE system
             N = S + E + I + R;
             
             dydt    =  zeros(4,1);
@@ -53,10 +39,9 @@ classdef Model_cls < matlab.mixin.Copyable
             dydt(2) =  (beta*S*I/N) - (sigma*E);    
             dydt(3) =  (sigma*E) - (gamma*I);
             dydt(4) =  gamma * I;
-%             dydt(5) =  sigma*E;
         end
         
-        function y = ode_solver(tSpan, init_cond, beta, gamma, sigma)
+        function [y, tout] = ode_solver(tSpan, init_cond, beta, gamma, sigma)
             import com.Model.*;
             
             E0 = init_cond(1);
@@ -66,15 +51,18 @@ classdef Model_cls < matlab.mixin.Copyable
             
             S0 = N0 - E0 - I0 - R0;
             
-%             y0 = [S0  E0  I0 0 I0];
             y0 = [S0  E0  I0 0];
+            
+            opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9, 'MaxOrder', 5);
+            % non stiff solver               
             [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR(t, y, beta, gamma, sigma), ...
-                        tSpan, y0);
+                        tSpan, y0, opt);
             
         end
         
-        function err = calculateSEIRError(params,  init_cond, tSpan, dataTable)
+        function err = calculateSEIRError(params,  init_cond, tSpan, dataTable, hyperparameters)
             import com.Model.*;
+            [a, b] = deal(hyperparameters(1), hyperparameters(2));
             
             [beta, gamma, sigma] = deal(params(1), params(2), params(3));
             sol = Model_cls.ode_solver(tSpan, init_cond, beta, gamma, sigma);
@@ -83,12 +71,29 @@ classdef Model_cls < matlab.mixin.Copyable
             E = sol(:,2);                    
             I = sol(:,3);
             R = sol(:,4);
-%             d_= sol(:,5);
             
-            err =  I(1:size(dataTable, 1)) - dataTable.PositivesTotal.^2;
-            %err =(...
-            %I(1:size(dataTable, 1)) - dataTable.PositivesTotal);%.^2;% +...
-            %R(1:size(dataTable, 1)) - dataTable.Recovered).^2;
+            s1= (I(1:size(dataTable, 1)) - dataTable.PositivesTotal).^2;
+%             s1 = s1/max(s1);
+            
+            s2 = abs(R(1:size(dataTable, 1)) - dataTable.Recovered);
+%             s2 = s2/max(s2);
+            
+%             clf;
+%             hold on;
+%             plot(1:size(dataTable, 1), s1, 'r');
+%             plot(1:size(dataTable, 1), s2, 'b');
+            err = a*s1 + b*s2;% + s2;%/(max(s1)*max(s2));
+
+%             try
+%                 A1 = trapz(I(1:size(dataTable, 1)));
+%                 A2 = trapz(dataTable.PositivesTotal);
+%             catch
+%                 disp('here');
+%             end            
+%             %I admit the prediction to be just a little higher then the actual value
+%             err = abs(A1 - A2);
+            
+            
         end
     end
     
