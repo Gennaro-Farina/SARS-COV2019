@@ -110,9 +110,9 @@ classdef Model_cls < matlab.mixin.Copyable
             switch This_obj.modelType_scl
                 case This_obj.SEIR_MODEL_scl                    
                     addParameter(p, 'N', 1);  
-                    addParameter(p, 'beta', 9/10);
-                    addParameter(p, 'gamma', 197/244);
-                    addParameter(p, 'sigma', 1/10);
+                    addParameter(p, 'beta', 0.7);
+                    addParameter(p, 'gamma', 1/5);
+                    addParameter(p, 'sigma', 1/5);
                     
                     parse(p, varargin{:})
                     
@@ -136,6 +136,8 @@ classdef Model_cls < matlab.mixin.Copyable
             
             addParameter(p, 'I0', 1);
             addParameter(p, 'E0', 0);
+            addParameter(p, 'R0', 0);
+            addParameter(p, 'N0', 0);
             addParameter(p, 't0', datetime('2020-01-01'));
             addParameter(p, 'tend', datetime('2020-01-09'));
 
@@ -143,15 +145,19 @@ classdef Model_cls < matlab.mixin.Copyable
            
             I0 = p.Results.I0;
             E0 = p.Results.E0;
+            R0 = p.Results.R0;
+            N0 = p.Results.N0;
             
             switch This_obj.modelType_scl
                 case This_obj.SEIR_MODEL_scl
                     
-%                     y0 = [This_obj.N-I0-E0-0  E0  I0 0 I0];
-                    y0 = [This_obj.N-I0-E0-0  E0  I0 0];
-                    opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9);
-                    [tout, y] = ode45(@(t,y) Model_cls.OrdinaryDifferentialEquation_SEIR(t,y, This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
-                        0:1:p.Results.tend, y0, opt);
+                    y0 = [E0 I0 R0 N0];%;This_obj.N];
+                    opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9, 'MaxOrder', 5);
+
+                    % non stiff solver
+                    [y, tout] = ode_solver([0:1:p.Results.tend], y0, This_obj.beta, This_obj.gamma, This_obj.sigma)
+%                     [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR(t, y, This_obj.beta, This_obj.gamma, This_obj.sigma), ...
+%                         0:1:p.Results.tend, y0, opt);
                     % save results
                     This_obj.t = tout;
                     This_obj.S = y(:,1);
@@ -162,20 +168,18 @@ classdef Model_cls < matlab.mixin.Copyable
                     % calculate derivatives
                     dy = zeros(length(tout), 4);
                     for idx = 1:length(tout)
-                        dy(idx,:) =  Model_cls.OrdinaryDifferentialEquation_SEIR(0, y(idx,:), This_obj.N, This_obj.beta, This_obj.gamma, This_obj.sigma);
+                        dy(idx,:) =  Model_cls.ODE_SEIR(0, y(idx,:), This_obj.beta, This_obj.gamma, This_obj.sigma);
                     end
                     This_obj.dS = dy(:,1);
                     This_obj.dE = dy(:,2);                      
                     This_obj.dI = dy(:,3);                  
                     This_obj.dR = dy(:,4);
-%                     This_obj.d_ = dy(:,5);
                     
                     ReLU = @(x) max(0, x);
                     This_obj.S      = arrayfun(ReLU, This_obj.S);
                     This_obj.E      = arrayfun(ReLU, This_obj.E);
                     This_obj.I      = arrayfun(ReLU, This_obj.I);
                     This_obj.R      = arrayfun(ReLU, This_obj.R);
-%                     This_obj.d_     = arrayfun(ReLU, This_obj.d_);
             end
         end
     end
