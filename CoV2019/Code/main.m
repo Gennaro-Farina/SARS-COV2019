@@ -6,7 +6,7 @@ import com.Model.*;
 import com.Viewer.*;
 
 startDate = datenum('24-Feb-2020');
-endDate   = datenum('31-Mar-2020');
+endDate   = datenum('9-Mar-2020');
 region    = 'all';
 
 beta  = 0.78; % infection rate
@@ -33,7 +33,7 @@ catch Exception
     disp(Exception.identifier);
 end
 
-E0 = I0 * 5.0;%20.0;  % https://www.medrxiv.org/content/10.1101/2020.01.23.20018549v1.full.pdf
+E0 = I0 * 20.0;  % https://www.medrxiv.org/content/10.1101/2020.01.23.20018549v1.full.pdf
 R0 = 0;
 %N = dataTable(end, :).TotalTampons;% Italian population of tampons at the last time window available date
 %N = 60457165;% Italian population on 2020 19 July 
@@ -66,10 +66,10 @@ try
 %     end
 
     %ftns = @(x) norm([dataTable.PositivesTotal, dataTable.Recovered]-Model_cls.getIR(x, [0:1:tend], init_cond));
-    ftns = @(x) norm([dataTable.PositivesTotal, dataTable.Recovered]-Model_cls.getIR(x, linspace(1, tend), init_cond));
+    ftns = @(x) norm([dataTable.PositivesTotal, dataTable.Recovered]- Model_cls.getIR(x, [0:1:tend], init_cond));
     PopSz = 500;
     Parms = 3;
-    opts = optimoptions('ga', 'PopulationSize', PopSz, 'InitialPopulationMatrix', randi(1e4, PopSz, Parms)*1e3, 'MaxGenerations', 2e3, 'PlotFcn', @gaplotbestf, 'PlotInterval', 1);
+    opts = optimoptions('ga', 'PopulationSize',PopSz, 'InitialPopulationMatrix',randi(1E+4,PopSz,Parms)*1E-3, 'MaxGenerations',2E3, 'PlotFcn',@gaplotbestf, 'PlotInterval',1);
     tic;
     [parameters,fval,exitflag,output] = ga(ftns, Parms, [], [], [], [], zeros(Parms,1), Inf(Parms,1), [], [], opts);
     toc;
