@@ -8,6 +8,7 @@ classdef Viewer_cls < handle
             addParameter(p, 't0',   datenum('01-Gen-2020'));
             addParameter(p, 'datapoints', []);
             addParameter(p, 'datapointsNames', []);
+            addParameter(p, 'tend', datenum('01-Gen-2020'));
             addParameter(p, 'title', []);
             
             parse(p, varargin{:})
@@ -15,7 +16,7 @@ classdef Viewer_cls < handle
             datapoints = p.Results.datapoints;
             datapointsNames = p.Results.datapointsNames;
             title_str = p.Results.title;
-            
+            tend = p.Results.tend;
             % dependentVariables is a matrix whose column are dependent variables
             figure();
             hold on;
@@ -29,7 +30,7 @@ classdef Viewer_cls < handle
             
             % plotting real data
             for dpi = 1:size(datapoints, 2)
-                plot(independentVariableArray(1:size(datapoints,1)), datapoints(:, dpi), 'o');
+                plot([0:1:tend], datapoints(:, dpi), 'o');
             end
             
             if not(isempty(datapointsNames))

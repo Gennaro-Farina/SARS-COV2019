@@ -41,21 +41,6 @@ classdef Model_cls < matlab.mixin.Copyable
             dydt(4) =  gamma * I;
         end
         
-         function dydt = ODE_SEIR_rho(~, y, beta, gamma, sigma, rho)
-            S = y(1);
-            E = y(2);    
-            I = y(3);
-            R = y(4);
-            N = S + E + I + R;
-            
-            dydt    =  zeros(4,1);
-            dydt(1) =  -(rho * beta*S*I)/N ;
-            dydt(2) =  (rho * beta*S*I/N) - (sigma*E);    
-            dydt(3) =  (sigma*E) - (gamma*I);
-            dydt(4) =  gamma * I;
-        end
-        
-        
         function [y, tout] = ode_solver(tSpan, init_cond, beta, gamma, sigma)
             import com.Model.*;
             
@@ -89,7 +74,7 @@ classdef Model_cls < matlab.mixin.Copyable
             
             opt = odeset('RelTol',1.0e-6,'AbsTol',1.0e-9, 'MaxOrder', 5);
             % non stiff solver               
-            [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR_rho(t, y, beta, gamma, sigma, rho), ...
+            [tout, y] = ode45(@(t,y) Model_cls.ODE_SEIR(t, y, beta, gamma, sigma), ...
                         tSpan, y0, opt);
             
         end
@@ -186,9 +171,9 @@ classdef Model_cls < matlab.mixin.Copyable
             import com.Model.*;
 
                         
-            [beta, gamma, sigma, rho] = deal(params(1), params(2), params(3), params(4));
+            [beta, gamma, sigma] = deal(params(1), params(2), params(3));
             
-            sol = Model_cls.ode_solver_rho(tSpan, init_cond, beta, gamma, sigma, rho);
+            sol = Model_cls.ode_solver(tSpan, init_cond, beta, gamma, sigma);
             
             S = sol(:,1);
             E = sol(:,2);                    
