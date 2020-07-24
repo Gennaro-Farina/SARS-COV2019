@@ -68,7 +68,7 @@ For SEIR system the mathematical model is:
 Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 2020 and 24 February 2020,  and computed the median incubation period to be 5.1 days (from 4.5 to 5.8 days), and they further discovered that 97.5% of those who develop symptoms will do so within 11.5 days (from 8.2 to 15.6 days) of infection. 
 
 ## The reproductive number R0
-<img src="https://latex.codecogs.com/gif.latex?{R_{0}}" />  is the reproductive number and you can think at it as the number of new cases generated from a single case - as a mean number - in a non-infected polulation, under hypothesis that all the polulation is supsceptible [6]. It's definition is still not completely shared in mathematical community.
+<img src="https://latex.codecogs.com/gif.latex?{R_{0}}" />  is the reproductive number and you can think at it as the number of new cases generated from a single case - as a mean number - in a non-infected polulation, under hypothesis that all the polulation is supsceptible. It's definition is still not completely shared in mathematical community.
 
 - <img src="https://latex.codecogs.com/gif.latex?{R_{0}=\frac{\beta}{\gamma}}" /> 
 
