@@ -46,10 +46,13 @@ end
 E0 = I0 * 20.0;  % https://www.medrxiv.org/content/10.1101/2020.01.23.20018549v1.full.pdf
 R0 = 0;
 N = 60456197; %tt;  italy population on 23 july
+
+init_cond = [E0, I0, R0, N]; %dataTable(1, :).TotalTampons];
 initialParameters = [beta gamma sigma];
+
 lowerBoundsX = [0.6, 1/6, 1/8];
 upperBoundsX = [0.9, 1/4, 1];
-init_cond = [E0, I0, R0, N]; %dataTable(1, :).TotalTampons];
+
 
 % Define the model and the solver, run the solver, get the results
 try
@@ -76,14 +79,14 @@ try
     %ftns = @(x) norm([dataTable.PositivesTotal, dataTable.Recovered]-Model_cls.getIR(x, [0:1:tend], init_cond));
 %     ftns = @(x) norm([dataTable.PositivesTotal, dataTable.Recovered]- Model_cls.getIR(x, [0:tend], init_cond));
     ftns = @(x) norm([dataTable.PositivesTotal]- Model_cls.getI(x, [0:tEnd], init_cond));
-    PopSz = 3e2;
-    Parms = 3;
+    populationSize = 3e2;
+    paramsNumber = 3;
     
     % matlab genetic algoritm for finding a good combination of parameters
-    opts = optimoptions('ga', 'PopulationSize',PopSz, 'InitialPopulationMatrix',randi(1E+4,PopSz,Parms)*1E-3, 'MaxGenerations',1E3, 'PlotFcn',@gaplotbestf, 'PlotInterval',1);
+    opts = optimoptions('ga', 'PopulationSize',populationSize, 'InitialPopulationMatrix',randi(1E+4,populationSize,paramsNumber)*1E-3, 'MaxGenerations',1E3, 'PlotFcn',@gaplotbestf, 'PlotInterval',1);
     tic;
     %[parameters,fval,exitflag,output] = ga(ftns, Parms, [], [], [], [], zeros(Parms,1), Inf(Parms,1), [], [], opts);
-    [parameters,fval,exitflag,output] = ga(ftns, Parms, [], [], [], [], lowerBoundsX,  upperBoundsX, [], [], opts);
+    [parameters,fval,exitflag,output] = ga(ftns, paramsNumber, [], [], [], [], lowerBoundsX,  upperBoundsX, [], [], opts);
     toc;
 
     disp('Solved!');    disp('Best combination: '); 
@@ -164,6 +167,7 @@ end
 
 
 % Social distancing =======================================================
+try
 % Keep fixed is just a trial
 parameters = [0.8543    0.2500    0.1250]; % parameters obtained through minimization (report eample)
 rho = [1, 0.8, 0.5];
@@ -194,4 +198,8 @@ for r = 1:numel(rho)
         't0', startDate, ...
         'tend', tEnd, ...
         'title', string(['Predictions: rho:' num2str(curRho) ' infected and Exposed']));
+end
+catch Exception
+    disp(Exception.identifier);
+    disp('Error on the model when simulating social distancing');
 end
