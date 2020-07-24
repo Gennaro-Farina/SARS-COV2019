@@ -6,7 +6,7 @@ import com.Model.*;
 import com.Viewer.*;
 
 startDate           = datenum('24-Feb-2020');
-endDate             = datenum('09-Mar-2020');% should be today
+endDate             = datenum('09-Mar-2020');% interval of fitting end date. You can try for example with 31-Mar-2020 too
 predictionEndDate   = datenum('01-Sep-2020');
 
 
