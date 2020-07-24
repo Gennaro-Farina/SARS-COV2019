@@ -97,5 +97,5 @@ Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:
 
 [5] https://idmod.org/docs/general/model-seir.html
 
-[6] A  COST-BASED  COMPARISON  OF  QUARANTINE  STRATEGIES FOR  NEW  EMERGING  DISEASES, Anuj Mubayi, hristopher Kribs Zaleta, Maia Martcheva, Carlos Castillo-Ch ́avez1,
+[6] A cost-based comparison of quarantine strategies for new emerging diseases, Anuj Mubayi, hristopher Kribs Zaleta, Maia Martcheva, Carlos Castillo-Ch ́avez1,
 an others. Mathematical Biosciences and Engineering 
