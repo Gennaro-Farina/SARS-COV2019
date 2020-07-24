@@ -99,3 +99,17 @@ Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:
 
 [6] A cost-based comparison of quarantine strategies for new emerging diseases, Anuj Mubayi, hristopher Kribs Zaleta, Maia Martcheva, Carlos Castillo-Ch ́avez1,
 an others. Mathematical Biosciences and Engineering 
+
+Other useful resources:
+
+ [7] https://it.mathworks.com/matlabcentral/fileexchange/74545-generalized-seir-epidemic-model-fitting-and-computation
+    
+ [8] Works on coronavirus by this author: https://it.mathworks.com/matlabcentral/profile/authors/3576565
+    
+ [9] https://it.mathworks.com/matlabcentral/answers/517966-using-lsqcurvefit-with-ode15s-sir-model\#comment_831103
+    
+ [10] https://github.com/EfDe2020/IP_COVID-19/blob/master/script1.m
+    
+ [11] https://towardsdatascience.com/estimating-parameters-of-compartmental-models-from-observed-data-62f87966bb2b
+    
+ [12] https://cs.uwaterloo.ca/~paforsyt/SEIR.html
