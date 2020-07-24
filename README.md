@@ -2,7 +2,7 @@ premise:
 I'm not an epidemiologist, I'm a Computer Scientist, so I'll build on existing works in the literature eventually bring some coding contributions and insights that I think might be useful.
 
 # Implementation of a SIR model for the predictions of coronavirus spreads
-This repo will contain:
+This repo contains:
 
 1) data preprocess and cleaning
 2) the code for a dynamical model for the evolution of the pandemy
@@ -14,7 +14,7 @@ This repo will contain:
 
    - a cost function which could represent the economic cost for institutions to enforcing quarantine measures and the economic cost per infected person
 
-   - optimal strategies to minimize the total economic cost of the epidemic.
+   <!-- - optimal strategies to minimize the total economic cost of the epidemic.-->
 
 
 # SARS-COV2019
@@ -70,7 +70,7 @@ Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 20
 ## The reproductive number R0
 <img src="https://latex.codecogs.com/gif.latex?{R_{0}}" />  is the reproductive number and you can think at it as the number of new cases generated from a single case - as a mean number - in a non-infected polulation, under hypothesis that all the polulation is supsceptible. It's definition is still not completely shared in mathematical community.
 
-- <img src="https://latex.codecogs.com/gif.latex?{R_{0}={\beta}{\gamma}}" /> 
+- <img src="https://latex.codecogs.com/gif.latex?{R_{0}=\frac{\beta}{\gamma}}" /> 
 
 
 ## Some strong assumptions:
@@ -80,7 +80,7 @@ Lauer, Grantz et al [2] made a study on 181 cases, reported between 4 January 20
 - All the polulation is supsceptible
 
 ## Further consideration
-Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:  and no! this is not _The walking dead_ pandemic :zombie: . Keep attention on please.
+Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:
 
 # Sources:
 [1] _Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China under public health interventions._ J Thorac Dis. 2020;12(3):165-174. doi:10.21037/jtd.2020.02.64,  Yang Z, Zeng Z, Wang K, et al.
@@ -96,3 +96,5 @@ Keep the distance please  :frowning_man: :straight_ruler: :frowning_man:  and no
     [4.2] https://it.wikipedia.org/wiki/Numero_di_riproduzione_di_base
 
 [5] https://idmod.org/docs/general/model-seir.html
+
+an others
